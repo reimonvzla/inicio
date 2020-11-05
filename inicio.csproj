@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{67BDD0F6-95A1-4EEF-ACEC-4A00DBCB0FE2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Requerimientos</RootNamespace>
+    <AssemblyName>inicio</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Softech.Administrativo.BusinessObjects">
+      <HintPath>..\..\inicio\bin\Debug\Softech.Administrativo.BusinessObjects.DLL</HintPath>
+    </Reference>
+    <Reference Include="Softech.Administrativo.DefinicionBO">
+      <HintPath>..\..\inicio\bin\Debug\Softech.Administrativo.DefinicionBO.DLL</HintPath>
+    </Reference>
+    <Reference Include="Softech.Base.BusinessObjects">
+      <HintPath>..\..\inicio\bin\Debug\Softech.Base.BusinessObjects.DLL</HintPath>
+    </Reference>
+    <Reference Include="Softech.Base.DefinicionBO">
+      <HintPath>..\..\inicio\bin\Debug\Softech.Base.DefinicionBO.DLL</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entidades\Almacen.cs" />
+    <Compile Include="Entidades\Articulo.cs" />
+    <Compile Include="Entidades\CategoriaArticulo.cs" />
+    <Compile Include="Entidades\Cliente.cs" />
+    <Compile Include="Entidades\ColorArticulo.cs" />
+    <Compile Include="Entidades\CondicionPago.cs" />
+    <Compile Include="Entidades\CuentaIngrEgre.cs" />
+    <Compile Include="Entidades\DetaOrdenCompra.cs" />
+    <Compile Include="Entidades\DetaPedidoVenta.cs" />
+    <Compile Include="Entidades\Empresa.cs" />
+    <Compile Include="Entidades\EncabOrdenCompra.cs" />
+    <Compile Include="Entidades\EncabPedidoVenta.cs" />
+    <Compile Include="Entidades\LineaArticulo.cs" />
+    <Compile Include="Entidades\ProcedenciaArticulo.cs" />
+    <Compile Include="Entidades\Proveedor.cs" />
+    <Compile Include="Entidades\Response.cs" />
+    <Compile Include="Entidades\Resultado.cs" />
+    <Compile Include="Entidades\Segmento.cs" />
+    <Compile Include="Entidades\SubLineaArticulo.cs" />
+    <Compile Include="Entidades\Sucursal.cs" />
+    <Compile Include="Entidades\TipoCliente.cs" />
+    <Compile Include="Entidades\TipoProveedor.cs" />
+    <Compile Include="Entidades\Transporte.cs" />
+    <Compile Include="Entidades\Ubicacion.cs" />
+    <Compile Include="Entidades\Unidad.cs" />
+    <Compile Include="Entidades\UnidadesArticulo.cs" />
+    <Compile Include="Entidades\Usuario.cs" />
+    <Compile Include="Entidades\Vendedor.cs" />
+    <Compile Include="Entidades\Zona.cs" />
+    <Compile Include="Formularios\FrmBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmBase.Designer.cs">
+      <DependentUpon>FrmBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmCargando.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmCargando.Designer.cs">
+      <DependentUpon>FrmCargando.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmImportarArticulos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmImportarArticulos.Designer.cs">
+      <DependentUpon>FrmImportarArticulos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmImportarClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmImportarClientes.Designer.cs">
+      <DependentUpon>FrmImportarClientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmImportarOrdenesCompra.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmImportarOrdenesCompra.Designer.cs">
+      <DependentUpon>FrmImportarOrdenesCompra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmImportarPedidosVenta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmImportarPedidosVenta.Designer.cs">
+      <DependentUpon>FrmImportarPedidosVenta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmImportarProveedores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmImportarProveedores.Designer.cs">
+      <DependentUpon>FrmImportarProveedores.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmResultados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmResultados.Designer.cs">
+      <DependentUpon>FrmResultados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="inicio.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Formularios\FrmCargando.resx">
+      <DependentUpon>FrmCargando.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmImportarArticulos.resx">
+      <DependentUpon>FrmImportarArticulos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmImportarClientes.resx">
+      <DependentUpon>FrmImportarClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmImportarOrdenesCompra.resx">
+      <DependentUpon>FrmImportarOrdenesCompra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmImportarPedidosVenta.resx">
+      <DependentUpon>FrmImportarPedidosVenta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmImportarProveedores.resx">
+      <DependentUpon>FrmImportarProveedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmResultados.resx">
+      <DependentUpon>FrmResultados.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="img\sample.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Modelos Excel\Articulos_actualizado2.xls" />
+    <None Include="Modelos Excel\Clientes_Actualizado2.xls" />
+    <None Include="Modelos Excel\OrdCompra_Actualizado2.xls" />
+    <None Include="Modelos Excel\Pedidos_Actualizado2.xls" />
+    <None Include="Modelos Excel\Proveedores_Actualizado2.xls" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utilitarios\Utilitarios.csproj">
+      <Project>{814ec13f-0657-4e67-aa1f-c2ca64bb168c}</Project>
+      <Name>Utilitarios</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
