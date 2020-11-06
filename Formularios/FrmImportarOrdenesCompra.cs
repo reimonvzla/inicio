@@ -140,7 +140,8 @@
                 int index = 0, rengNum = 0;
                 string nroOrdenCompra = string.Empty;
                 DateTime fecha; //Para validar las fechas q viene de excel si son validas.
-                Decimal porDesc;
+                decimal porDesc;
+                decimal tasaMoneda = 0;
 
                 #region Recorrido de datagrid para procesar a oc
                 foreach (DataGridViewRow iDataRow in listHojaExcel.Rows)
@@ -156,6 +157,8 @@
                         rengNum = 0;
                         OrdenC_Reng = new List<DetaOrdenCompra>();
                         index++;
+                        
+                        tasaMoneda = MetodosFunciones.ObtenerTasa(ObjGlobalFormaUIPC, Convert.ToDateTime(iDataRow.Cells[3].Value), iDataRow.Cells[1].Value.ToString().Trim(), "C");
 
                         #region Verifica documento
                         if (iDataRow.Cells[0].Value == null)
@@ -235,12 +238,11 @@
                             #region Campos
                             DocNum = iDataRow.Cells[0].Value.ToString().Trim(),
                             Descrip = iDataRow.Cells[6].Value == null ? string.Empty : iDataRow.Cells[6].Value.ToString().Trim(),
-                            //CoProv = iDataRow.Cells[2].Value.ToString().Trim(),
                             CoProv = prov.CoProv,
-                            CoCond = prov.CondPag,//Backend
-                            Nac = prov.Nacional,//Backend
+                            CoCond = prov.CondPag,
+                            Nac = prov.Nacional,
                             CoMone = iDataRow.Cells[1].Value == null ? string.Empty : iDataRow.Cells[1].Value.ToString().Trim(), //Moneda
-                            Tasa = 1, //Backend
+                            Tasa = tasaMoneda,
                             FecEmis = Convert.ToDateTime(iDataRow.Cells[3].Value),
                             FecReg = DateTime.Now,
                             FecVenc = Convert.ToDateTime(iDataRow.Cells[4].Value),
@@ -352,25 +354,33 @@
 
                     if (Convert.ToDecimal(iDataRow.Cells[9].Value) > 0)
                     {
+
+                        Decimal costUni = Convert.ToDecimal(iDataRow.Cells[9].Value);
+                        Decimal montDesc = Convert.ToDecimal(iDataRow.Cells[9].Value) * Convert.ToDecimal(iDataRow.Cells[12].Value) / 100;
+                        Decimal totalArt = Convert.ToDecimal(iDataRow.Cells[8].Value);
+                        String porcDesc = iDataRow.Cells[12].Value.ToString().Trim();
+
                         #region Detalle
                         OrdenC_Reng.Add(new DetaOrdenCompra
                         {
                             DocNum = iDataRow.Cells[0].Value.ToString().Trim(),
                             RengNum = rengNum,
                             CoArt = iDataRow.Cells[5].Value.ToString().Trim(),
-                            //DesArt = iDataRow.Cells[6].Value.ToString().Trim(),
                             CoAlma = iDataRow.Cells[7].Value.ToString().Trim(),
-                            TotalArt = Convert.ToDecimal(iDataRow.Cells[8].Value),
-                            Pendiente = Convert.ToDecimal(iDataRow.Cells[8].Value),
-                            CostUnit = Convert.ToDecimal(iDataRow.Cells[9].Value) - (Convert.ToDecimal(iDataRow.Cells[9].Value) * Convert.ToDecimal(iDataRow.Cells[12].Value) / 100),
-                            RengNeto = Convert.ToDecimal(iDataRow.Cells[8].Value) * (Convert.ToDecimal(iDataRow.Cells[9].Value) - (Convert.ToDecimal(iDataRow.Cells[9].Value) * Convert.ToDecimal(iDataRow.Cells[12].Value) / 100)),
+                            TotalArt = totalArt,
+                            Pendiente = totalArt,
+                            CostUnit = costUni * tasaMoneda,
+                            RengNeto = (costUni * totalArt - montDesc) * tasaMoneda,
                             TipoImp = iDataRow.Cells[10].Value.ToString().Trim(), //Calculo de monto_imp en el backend
                             CoSucuIn = Suc.CoSucur.Trim(),
                             CoUsIn = Usr.CodUsuario.Trim(),
                             FeUsIn = DateTime.Now,
                             FeUsMo = Convert.ToDateTime("01/01/1900"),
                             CoUsMo = string.Empty,
-                            CoSucuMo = string.Empty
+                            CoSucuMo = string.Empty,
+                            CostUnitOm = costUni,
+                            PorcDesc = porcDesc,
+                            MontoDesc = montDesc * tasaMoneda
                         });
                         #endregion
                     }

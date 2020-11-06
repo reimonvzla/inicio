@@ -143,7 +143,8 @@
                 int index = 0, rengNum = 0;
                 string nroPedidoVenta = string.Empty;
                 DateTime fecha;
-                Decimal porDesc;
+                decimal porDesc;
+                decimal tasaMoneda = 0;
 
                 #region Recorrido de datagrid para procesar a pedido
                 foreach (DataGridViewRow iDataRow in listHojaExcel.Rows)
@@ -160,6 +161,8 @@
                         rengNum = 0;
                         PedidoV_Reng = new List<DetaPedidoVenta>();
                         index++;
+
+                        tasaMoneda = MetodosFunciones.ObtenerTasa(ObjGlobalFormaUIPC, Convert.ToDateTime(iDataRow.Cells[3].Value), iDataRow.Cells[1].Value.ToString().Trim(), "V");
 
                         #region Verifica documento
                         if (iDataRow.Cells[0].Value == null)
@@ -259,7 +262,7 @@
                             CoCond = cli.CondPag, //Backend
                             CoMone = iDataRow.Cells[1].Value == null ? string.Empty : iDataRow.Cells[1].Value.ToString().Trim(), //Moneda
                             CoTran = tra.CoTran.Trim(),
-                            Tasa = 1, //Backend
+                            Tasa = tasaMoneda,
                             FecEmis = Convert.ToDateTime(iDataRow.Cells[3].Value),
                             FecReg = DateTime.Now,
                             FecVenc = Convert.ToDateTime(iDataRow.Cells[4].Value),
@@ -370,18 +373,22 @@
 
                     if (Convert.ToDecimal(iDataRow.Cells[9].Value) > 0)
                     {
+                        decimal precVta = Convert.ToDecimal(iDataRow.Cells[9].Value);
+                        decimal montDesc = Convert.ToDecimal(iDataRow.Cells[9].Value) * Convert.ToDecimal(iDataRow.Cells[12].Value) / 100;
+                        decimal totalArt = Convert.ToDecimal(iDataRow.Cells[8].Value);
+                        String porcDesc = iDataRow.Cells[12].Value.ToString().Trim();
+
                         #region Detalle
                         PedidoV_Reng.Add(new DetaPedidoVenta
                         {
                             DocNum = iDataRow.Cells[0].Value.ToString().Trim(),
                             RengNum = rengNum,
                             CoArt = iDataRow.Cells[5].Value.ToString().Trim(),
-                            //DesArt = iDataRow.Cells[6].Value.ToString().Trim(),
-                            TotalArt = Convert.ToDecimal(iDataRow.Cells[8].Value),
-                            Pendiente = Convert.ToDecimal(iDataRow.Cells[8].Value),
+                            TotalArt = totalArt,
+                            Pendiente = totalArt,
                             CoPrecio = "01",
-                            PrecVta = Convert.ToDecimal(iDataRow.Cells[9].Value) - (Convert.ToDecimal(iDataRow.Cells[9].Value) * Convert.ToDecimal(iDataRow.Cells[12].Value) / 100),
-                            RengNeto = Convert.ToDecimal(iDataRow.Cells[8].Value) * (Convert.ToDecimal(iDataRow.Cells[9].Value) - (Convert.ToDecimal(iDataRow.Cells[9].Value) * Convert.ToDecimal(iDataRow.Cells[12].Value) / 100)),
+                            PrecVta = precVta * tasaMoneda,
+                            RengNeto = (precVta * totalArt - montDesc) * tasaMoneda,
                             CoAlma = iDataRow.Cells[7].Value.ToString().Trim(),
                             CoSucuIn = Suc.CoSucur.Trim(),
                             TipoImp = iDataRow.Cells[10].Value.ToString().Trim(), //Calculo de monto_imp en el backend
@@ -389,7 +396,9 @@
                             FeUsIn = DateTime.Now,
                             FeUsMo = DateTime.Now,
                             CoUsMo = Usr.CodUsuario.Trim(),
-                            CoSucuMo = Suc.CoSucur.Trim()
+                            CoSucuMo = Suc.CoSucur.Trim(),
+                            PorcDesc = porcDesc,
+                            MontoDesc = montDesc * tasaMoneda
                         });
                         #endregion
                     }

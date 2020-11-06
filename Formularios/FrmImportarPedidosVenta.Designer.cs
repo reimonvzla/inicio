@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblMaquina = new System.Windows.Forms.Label();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.lblSucursal = new System.Windows.Forms.Label();
@@ -211,6 +213,8 @@
             // 
             // ColFecEmis
             // 
+            dataGridViewCellStyle1.NullValue = null;
+            this.ColFecEmis.DefaultCellStyle = dataGridViewCellStyle1;
             this.ColFecEmis.HeaderText = "Fecha Emision";
             this.ColFecEmis.MinimumWidth = 6;
             this.ColFecEmis.Name = "ColFecEmis";
@@ -219,6 +223,8 @@
             // 
             // ColFecVenc
             // 
+            dataGridViewCellStyle2.NullValue = null;
+            this.ColFecVenc.DefaultCellStyle = dataGridViewCellStyle2;
             this.ColFecVenc.HeaderText = "Fecha Vence";
             this.ColFecVenc.MinimumWidth = 6;
             this.ColFecVenc.Name = "ColFecVenc";
@@ -283,10 +289,10 @@
             // 
             // ColPorcDesc
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = "0";
-            this.ColPorcDesc.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = "0";
+            this.ColPorcDesc.DefaultCellStyle = dataGridViewCellStyle3;
             this.ColPorcDesc.HeaderText = "PorcDescuento";
             this.ColPorcDesc.MinimumWidth = 6;
             this.ColPorcDesc.Name = "ColPorcDesc";
