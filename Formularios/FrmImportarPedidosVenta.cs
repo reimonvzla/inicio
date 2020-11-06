@@ -80,11 +80,12 @@
                               prec_vta = data.Field<object>("Precio") == null ? string.Empty : data.Field<object>("Precio"),
                               tipo_imp = data.Field<object>("Tipo IVA") == null ? string.Empty : data.Field<object>("Tipo IVA"),
                               cod_Transporte = data.Field<object>("Transporte") == null ? string.Empty : data.Field<object>("Transporte"),
+                              por_descuento = data.Field<object>("PorcDescuento") == null ? string.Empty : data.Field<object>("PorcDescuento"),
                           };
 
                 foreach (var row in Qry)
                 {
-                    listHojaExcel.Rows.Add(row.num_Documento, row.cod_Moneda, row.cod_Cliente, row.fec_Emision, row.fec_Vencimiento, row.cod_Articulo, row.des_Articulo, row.cod_Almacen, row.total_art, row.prec_vta, row.tipo_imp, row.cod_Transporte);
+                    listHojaExcel.Rows.Add(row.num_Documento, row.cod_Moneda, row.cod_Cliente, row.fec_Emision, row.fec_Vencimiento, row.cod_Articulo, row.des_Articulo, row.cod_Almacen, row.total_art, row.prec_vta, row.tipo_imp, row.cod_Transporte, row.por_descuento);
                 }
 
                 btnProcesar.Enabled = true;
@@ -142,8 +143,7 @@
                 int index = 0, rengNum = 0;
                 string nroPedidoVenta = string.Empty;
                 DateTime fecha;
-
-                
+                Decimal porDesc;
 
                 #region Recorrido de datagrid para procesar a pedido
                 foreach (DataGridViewRow iDataRow in listHojaExcel.Rows)
@@ -343,6 +343,29 @@
                     }
                     #endregion
 
+                    #region porcentaje descuento invalido
+                    if (iDataRow.Cells[12].Value == null)
+                    {
+                        CloseLoading();
+                        MessageBox.Show("Porcentaje descuento no debe estar vacío. Coloque un valor por defecto = 0 en tal caso.");
+                        return;
+                    }
+
+                    if (Convert.ToDecimal(iDataRow.Cells[12].Value) < 0 || Convert.ToDecimal(iDataRow.Cells[12].Value) > 100)
+                    {
+                        CloseLoading();
+                        MessageBox.Show("Porcentaje descuento valor permitito entre 0 y 100.");
+                        return;
+                    }
+
+                    if (!Decimal.TryParse(iDataRow.Cells[12].Value.ToString(), out porDesc))
+                    {
+                        CloseLoading();
+                        MessageBox.Show("Porcentaje descuento tiene que ser un valor numérico.");
+                        return;
+                    }
+                    #endregion
+
                     rengNum++;
 
                     if (Convert.ToDecimal(iDataRow.Cells[9].Value) > 0)
@@ -357,8 +380,8 @@
                             TotalArt = Convert.ToDecimal(iDataRow.Cells[8].Value),
                             Pendiente = Convert.ToDecimal(iDataRow.Cells[8].Value),
                             CoPrecio = "01",
-                            PrecVta = Convert.ToDecimal(iDataRow.Cells[9].Value),
-                            RengNeto = Convert.ToDecimal(iDataRow.Cells[9].Value) * Convert.ToDecimal(iDataRow.Cells[8].Value),
+                            PrecVta = Convert.ToDecimal(iDataRow.Cells[9].Value) - (Convert.ToDecimal(iDataRow.Cells[9].Value) * Convert.ToDecimal(iDataRow.Cells[12].Value) / 100),
+                            RengNeto = Convert.ToDecimal(iDataRow.Cells[8].Value) * (Convert.ToDecimal(iDataRow.Cells[9].Value) - (Convert.ToDecimal(iDataRow.Cells[9].Value) * Convert.ToDecimal(iDataRow.Cells[12].Value) / 100)),
                             CoAlma = iDataRow.Cells[7].Value.ToString().Trim(),
                             CoSucuIn = Suc.CoSucur.Trim(),
                             TipoImp = iDataRow.Cells[10].Value.ToString().Trim(), //Calculo de monto_imp en el backend

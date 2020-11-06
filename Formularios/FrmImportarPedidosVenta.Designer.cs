@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblMaquina = new System.Windows.Forms.Label();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.lblSucursal = new System.Windows.Forms.Label();
@@ -51,6 +52,7 @@
             this.ColPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColTipIva = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColTransporte = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColPorcDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.listHojaExcel)).BeginInit();
             this.SuspendLayout();
             // 
@@ -172,7 +174,8 @@
             this.ColCant,
             this.ColPrecio,
             this.ColTipIva,
-            this.ColTransporte});
+            this.ColTransporte,
+            this.ColPorcDesc});
             this.listHojaExcel.Location = new System.Drawing.Point(12, 96);
             this.listHojaExcel.Name = "listHojaExcel";
             this.listHojaExcel.ReadOnly = true;
@@ -278,6 +281,18 @@
             this.ColTransporte.ReadOnly = true;
             this.ColTransporte.Width = 125;
             // 
+            // ColPorcDesc
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = "0";
+            this.ColPorcDesc.DefaultCellStyle = dataGridViewCellStyle1;
+            this.ColPorcDesc.HeaderText = "PorcDescuento";
+            this.ColPorcDesc.MinimumWidth = 6;
+            this.ColPorcDesc.Name = "ColPorcDesc";
+            this.ColPorcDesc.ReadOnly = true;
+            this.ColPorcDesc.Width = 125;
+            // 
             // FrmImportarPedidosVenta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -333,5 +348,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColPrecio;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColTipIva;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColTransporte;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColPorcDesc;
     }
 }

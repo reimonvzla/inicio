@@ -135,6 +135,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utilitarios\Utilitarios.csproj">
+      <Project>{814ec13f-0657-4e67-aa1f-c2ca64bb168c}</Project>
+      <Name>Utilitarios</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Formularios\FrmCargando.resx">
       <DependentUpon>FrmCargando.cs</DependentUpon>
     </EmbeddedResource>
@@ -166,17 +177,6 @@
     <None Include="Modelos Excel\OrdCompra_Actualizado2.xls" />
     <None Include="Modelos Excel\Pedidos_Actualizado2.xls" />
     <None Include="Modelos Excel\Proveedores_Actualizado2.xls" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.3</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Utilitarios\Utilitarios.csproj">
-      <Project>{814ec13f-0657-4e67-aa1f-c2ca64bb168c}</Project>
-      <Name>Utilitarios</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

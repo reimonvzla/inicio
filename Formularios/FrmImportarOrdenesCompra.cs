@@ -80,11 +80,12 @@
                               prec_vta = data.Field<object>("Cost Unitario") == null ? string.Empty : data.Field<object>("Cost Unitario"),
                               tipo_imp = data.Field<object>("Tipo IVA") == null ? string.Empty : data.Field<object>("Tipo IVA"),
                               comentario = data.Field<object>("Comentario") == null ? string.Empty : data.Field<object>("Comentario"),
+                              por_descuento = data.Field<object>("PorcDescuento") == null ? string.Empty : data.Field<object>("PorcDescuento"),
                           };
 
                 foreach (var row in Qry)
                 {
-                    listHojaExcel.Rows.Add(row.num_Documento, row.cod_Moneda, row.cod_Proveedor, row.fec_Emision, row.fec_Vencimiento, row.cod_Articulo, row.des_Articulo, row.cod_Almacen, row.total_art, row.prec_vta, row.tipo_imp, row.comentario);
+                    listHojaExcel.Rows.Add(row.num_Documento, row.cod_Moneda, row.cod_Proveedor, row.fec_Emision, row.fec_Vencimiento, row.cod_Articulo, row.des_Articulo, row.cod_Almacen, row.total_art, row.prec_vta, row.tipo_imp, row.comentario,row.por_descuento);
                 }
 
                 btnProcesar.Enabled = true;
@@ -139,6 +140,7 @@
                 int index = 0, rengNum = 0;
                 string nroOrdenCompra = string.Empty;
                 DateTime fecha; //Para validar las fechas q viene de excel si son validas.
+                Decimal porDesc;
 
                 #region Recorrido de datagrid para procesar a oc
                 foreach (DataGridViewRow iDataRow in listHojaExcel.Rows)
@@ -320,7 +322,30 @@
                         CloseLoading();
                         MessageBox.Show("Tipo iva no debe estar vacio.");
                         return;
-                    } 
+                    }
+                    #endregion
+
+                    #region porcentaje descuento invalido
+                    if (iDataRow.Cells[12].Value == null)
+                    {
+                        CloseLoading();
+                        MessageBox.Show("Porcentaje descuento no debe estar vacío. Coloque un valor por defecto = 0 en tal caso.");
+                        return;
+                    }
+                    
+                    if (Convert.ToDecimal(iDataRow.Cells[12].Value) < 0 || Convert.ToDecimal(iDataRow.Cells[12].Value) > 100)
+                    {
+                        CloseLoading();
+                        MessageBox.Show("Porcentaje descuento valor permitito entre 0 y 100.");
+                        return;
+                    }
+
+                    if (!Decimal.TryParse(iDataRow.Cells[12].Value.ToString(), out porDesc))
+                    {
+                        CloseLoading();
+                        MessageBox.Show("Porcentaje descuento tiene que ser un valor numérico.");
+                        return;
+                    }
                     #endregion
 
                     rengNum++;
@@ -337,8 +362,8 @@
                             CoAlma = iDataRow.Cells[7].Value.ToString().Trim(),
                             TotalArt = Convert.ToDecimal(iDataRow.Cells[8].Value),
                             Pendiente = Convert.ToDecimal(iDataRow.Cells[8].Value),
-                            CostUnit = Convert.ToDecimal(iDataRow.Cells[9].Value),
-                            RengNeto = Convert.ToDecimal(iDataRow.Cells[8].Value) * Convert.ToDecimal(iDataRow.Cells[9].Value),
+                            CostUnit = Convert.ToDecimal(iDataRow.Cells[9].Value) - (Convert.ToDecimal(iDataRow.Cells[9].Value) * Convert.ToDecimal(iDataRow.Cells[12].Value) / 100),
+                            RengNeto = Convert.ToDecimal(iDataRow.Cells[8].Value) * (Convert.ToDecimal(iDataRow.Cells[9].Value) - (Convert.ToDecimal(iDataRow.Cells[9].Value) * Convert.ToDecimal(iDataRow.Cells[12].Value) / 100)),
                             TipoImp = iDataRow.Cells[10].Value.ToString().Trim(), //Calculo de monto_imp en el backend
                             CoSucuIn = Suc.CoSucur.Trim(),
                             CoUsIn = Usr.CodUsuario.Trim(),

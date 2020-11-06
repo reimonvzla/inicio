@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "EX5hQtrZtxyyN1wSw/fJUb++m5Lii9g2l40//VIuOsbPgBumgFKQbalatFSwWH3k2PhHHJZ9X3Y87EkvcmUSnw==",
+  "success": true,
+  "projectFilePath": "C:\\Proyectos\\Proyectos 2K12\\ImportarExportarExcel\\OrdCPedArtCliPro\\inicio\\inicio.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\REIMON\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
